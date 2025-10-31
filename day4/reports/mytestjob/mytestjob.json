@@ -1,0 +1,557 @@
+{
+  "scan_start": "Fri Oct 31 12:24:33 2025",
+  "scan_args": "/usr/lib/nmap/nmap --privileged -sS -sV -O --script=banner,vuln -p- -T4 -oX /home/templemaster/cyber-security/reports/mytestjob/mytestjob.xml 192.168.127.130",
+  "hosts": [
+    {
+      "addresses": [
+        {
+          "addr": "192.168.127.130",
+          "addrtype": "ipv4"
+        },
+        {
+          "addr": "00:0C:29:4F:C1:DC",
+          "addrtype": "mac"
+        }
+      ],
+      "status": "up",
+      "ports": [
+        {
+          "port": 21,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "ftp",
+            "product": "vsftpd",
+            "version": "2.3.4",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "ftp-vsftpd-backdoor",
+              "output": "\n  VULNERABLE:\n  vsFTPd version 2.3.4 backdoor\n    State: VULNERABLE (Exploitable)\n    IDs:  BID:48539  CVE:CVE-2011-2523\n      vsFTPd version 2.3.4 backdoor, this was reported on 2011-07-04.\n    Disclosure date: 2011-07-03\n    Exploit results:\n      Shell command: id\n      Results: uid=0(root) gid=0(root)\n    References:\n      https://www.securityfocus.com/bid/48539\n      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2523\n      http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html\n      https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/unix/ftp/vsftpd_234_backdoor.rb\n"
+            },
+            {
+              "id": "banner",
+              "output": "220 (vsFTPd 2.3.4)"
+            }
+          ]
+        },
+        {
+          "port": 22,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "ssh",
+            "product": "OpenSSH",
+            "version": "4.7p1 Debian 8ubuntu1",
+            "extrainfo": "protocol 2.0"
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": "SSH-2.0-OpenSSH_4.7p1 Debian-8ubuntu1"
+            }
+          ]
+        },
+        {
+          "port": 23,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "telnet",
+            "product": "Linux telnetd",
+            "version": "",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": "\\xFF\\xFD\\x18\\xFF\\xFD \\xFF\\xFD#\\xFF\\xFD'"
+            }
+          ]
+        },
+        {
+          "port": 25,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "smtp",
+            "product": "Postfix smtpd",
+            "version": "",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": "220 metasploitable.localdomain ESMTP Postfix (Ubuntu)"
+            },
+            {
+              "id": "smtp-vuln-cve2010-4344",
+              "output": "\n  The SMTP server is not Exim: NOT VULNERABLE\n"
+            },
+            {
+              "id": "sslv2-drown",
+              "output": "\n  ciphers: \n    SSL2_RC4_128_WITH_MD5\n    SSL2_RC2_128_CBC_WITH_MD5\n    SSL2_RC4_128_EXPORT40_WITH_MD5\n    SSL2_DES_64_CBC_WITH_MD5\n    SSL2_DES_192_EDE3_CBC_WITH_MD5\n    SSL2_RC2_128_CBC_EXPORT40_WITH_MD5\n  vulns: \n    CVE-2016-0800: \n      title: OpenSSL: Cross-protocol attack on TLS using SSLv2 (DROWN)\n      state: VULNERABLE\n      ids: \n        CVE:CVE-2016-0800\n      description: \n              The SSLv2 protocol, as used in OpenSSL before 1.0.1s and 1.0.2 before 1.0.2g and\n      other products, requires a server to send a ServerVerify message before establishing\n      that a client possesses certain plaintext RSA data, which makes it easier for remote\n      attackers to decrypt TLS ciphertext data by leveraging a Bleichenbacher RSA padding\n      oracle, aka a \"DROWN\" attack.\n    \n      refs: \n        https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-0800\n        https://www.openssl.org/news/secadv/20160301.txt"
+            }
+          ]
+        },
+        {
+          "port": 53,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "domain",
+            "product": "ISC BIND",
+            "version": "9.4.2",
+            "extrainfo": ""
+          }
+        },
+        {
+          "port": 80,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "http",
+            "product": "Apache httpd",
+            "version": "2.2.8",
+            "extrainfo": "(Ubuntu) DAV/2"
+          },
+          "scripts": [
+            {
+              "id": "http-vuln-cve2017-1001000",
+              "output": "ERROR: Script execution failed (use -d to debug)"
+            },
+            {
+              "id": "http-slowloris-check",
+              "output": "\n  VULNERABLE:\n  Slowloris DOS attack\n    State: LIKELY VULNERABLE\n    IDs:  CVE:CVE-2007-6750\n      Slowloris tries to keep many connections to the target web server open and hold\n      them open as long as possible.  It accomplishes this by opening connections to\n      the target web server and sending a partial request. By doing so, it starves\n      the http server's resources causing Denial Of Service.\n      \n    Disclosure date: 2009-09-17\n    References:\n      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750\n      http://ha.ckers.org/slowloris/\n"
+            },
+            {
+              "id": "http-dombased-xss",
+              "output": "Couldn't find any DOM based XSS."
+            },
+            {
+              "id": "http-csrf",
+              "output": "\nSpidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.127.130\n  Found the following possible CSRF vulnerabilities: \n    \n    Path: http://192.168.127.130:80/dvwa/\n    Form id: \n    Form action: login.php\n    \n    Path: http://192.168.127.130:80/twiki/TWikiDocumentation.html\n    Form id: \n    Form action: http://TWiki.org/cgi-bin/passwd/TWiki/WebHome\n    \n    Path: http://192.168.127.130:80/twiki/TWikiDocumentation.html\n    Form id: \n    Form action: http://TWiki.org/cgi-bin/passwd/Main/WebHome\n    \n    Path: http://192.168.127.130:80/twiki/TWikiDocumentation.html\n    Form id: \n    Form action: http://TWiki.org/cgi-bin/edit/TWiki/\n    \n    Path: http://192.168.127.130:80/twiki/TWikiDocumentation.html\n    Form id: \n    Form action: http://TWiki.org/cgi-bin/view/TWiki/TWikiSkins\n    \n    Path: http://192.168.127.130:80/twiki/TWikiDocumentation.html\n    Form id: \n    Form action: http://TWiki.org/cgi-bin/manage/TWiki/ManagingWebs\n"
+            },
+            {
+              "id": "http-trace",
+              "output": "TRACE is enabled"
+            },
+            {
+              "id": "http-server-header",
+              "output": "Apache/2.2.8 (Ubuntu) DAV/2"
+            },
+            {
+              "id": "http-fileupload-exploiter",
+              "output": "\n  \n    Couldn't find a file-type field."
+            },
+            {
+              "id": "http-stored-xss",
+              "output": "Couldn't find any stored XSS vulnerabilities."
+            },
+            {
+              "id": "http-enum",
+              "output": "\n  /tikiwiki/: Tikiwiki\n  /test/: Test page\n  /phpinfo.php: Possible information file\n  /phpMyAdmin/: phpMyAdmin\n  /doc/: Potentially interesting directory w/ listing on 'apache/2.2.8 (ubuntu) dav/2'\n  /icons/: Potentially interesting folder w/ directory listing\n  /index/: Potentially interesting folder\n"
+            },
+            {
+              "id": "http-sql-injection",
+              "output": "\n  Possible sqli for queries:\n    http://192.168.127.130:80/dav/?C=N%3BO%3DD%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=M%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=D%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=S%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=capture-data.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/?page=source-viewer.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/?page=user-info.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=view-someones-blog.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=change-log.htm%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=user-poll.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=register.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=source-viewer.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=browser-info.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=set-background-color.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=user-info.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/?page=show-log.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=notes.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/?page=view-someones-blog.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=php-errors.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?username=anonymous&page=password-generator.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=usage-instructions.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=documentation%2Fhow-to-access-Mutillidae-over-Virtual-Box-network.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/?page=text-file-viewer.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=framing.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=dns-lookup.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=documentation%2Fvulnerabilities.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=installation.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=captured-data.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=add-to-your-blog.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=home.php&do=toggle-hints%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=secret-administrative-pages.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/?page=login.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=arbitrary-file-inclusion.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=show-log.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=pen-test-tool-lookup.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=login.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=home.php&do=toggle-security%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=credits.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=text-file-viewer.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=home.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=site-footer-xss-discussion.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/?page=credits.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/?page=add-to-your-blog.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/mutillidae/index.php?page=html5-storage.php%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=M%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=D%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=N%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=S%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=D%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=M%3BO%3DD%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=N%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=S%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=M%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=D%3BO%3DD%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=N%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=S%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=M%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=D%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=S%3BO%3DD%27%20OR%20sqlspider\n    http://192.168.127.130:80/dav/?C=N%3BO%3DA%27%20OR%20sqlspider\n    http://192.168.127.130:80/view/TWiki/TWikiHistory?rev=1.9%27%20OR%20sqlspider\n    http://192.168.127.130:80/oops/TWiki/TWikiHistory?template=oopsrev%27%20OR%20sqlspider&param1=1.10\n    http://192.168.127.130:80/oops/TWiki/TWikiHistory?template=oopsrev&param1=1.10%27%20OR%20sqlspider\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.9%27%20OR%20sqlspider&rev2=1.8\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.9&rev2=1.8%27%20OR%20sqlspider\n    http://192.168.127.130:80/view/TWiki/TWikiHistory?rev=1.8%27%20OR%20sqlspider\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.8%27%20OR%20sqlspider&rev2=1.7\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.8&rev2=1.7%27%20OR%20sqlspider\n    http://192.168.127.130:80/view/TWiki/TWikiHistory?rev=1.7%27%20OR%20sqlspider\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.10%27%20OR%20sqlspider&rev2=1.9\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.10&rev2=1.9%27%20OR%20sqlspider\n    http://192.168.127.130:80/view/TWiki/TWikiHistory?rev=1.9%27%20OR%20sqlspider\n    http://192.168.127.130:80/oops/TWiki/TWikiHistory?template=oopsrev%27%20OR%20sqlspider&param1=1.10\n    http://192.168.127.130:80/oops/TWiki/TWikiHistory?template=oopsrev&param1=1.10%27%20OR%20sqlspider\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.8%27%20OR%20sqlspider&rev2=1.7\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.8&rev2=1.7%27%20OR%20sqlspider\n    http://192.168.127.130:80/view/TWiki/TWikiHistory?rev=1.7%27%20OR%20sqlspider\n    http://192.168.127.130:80/view/TWiki/TWikiHistory?rev=1.8%27%20OR%20sqlspider\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.9%27%20OR%20sqlspider&rev2=1.8\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.9&rev2=1.8%27%20OR%20sqlspider\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.10%27%20OR%20sqlspider&rev2=1.9\n    http://192.168.127.130:80/rdiff/TWiki/TWikiHistory?rev1=1.10&rev2=1.9%27%20OR%20sqlspider\n"
+            }
+          ]
+        },
+        {
+          "port": 111,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "rpcbind",
+            "product": "",
+            "version": "2",
+            "extrainfo": "RPC #100000"
+          },
+          "scripts": [
+            {
+              "id": "rpcinfo",
+              "output": "\n  program version    port/proto  service\n  100000  2            111/tcp   rpcbind\n  100000  2            111/udp   rpcbind\n  100003  2,3,4       2049/tcp   nfs\n  100003  2,3,4       2049/udp   nfs\n  100005  1,2,3      48676/udp   mountd\n  100005  1,2,3      55951/tcp   mountd\n  100021  1,3,4      33541/udp   nlockmgr\n  100021  1,3,4      41265/tcp   nlockmgr\n  100024  1          43614/tcp   status\n  100024  1          55612/udp   status\n"
+            }
+          ]
+        },
+        {
+          "port": 139,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "netbios-ssn",
+            "product": "Samba smbd",
+            "version": "3.X - 4.X",
+            "extrainfo": "workgroup: WORKGROUP"
+          }
+        },
+        {
+          "port": 445,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "netbios-ssn",
+            "product": "Samba smbd",
+            "version": "3.X - 4.X",
+            "extrainfo": "workgroup: WORKGROUP"
+          }
+        },
+        {
+          "port": 512,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "exec",
+            "product": "netkit-rsh rexecd",
+            "version": "",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": "\\x01Where are you?"
+            }
+          ]
+        },
+        {
+          "port": 513,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "login",
+            "product": "",
+            "version": "",
+            "extrainfo": ""
+          }
+        },
+        {
+          "port": 514,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "shell",
+            "product": "Netkit rshd",
+            "version": "",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": "\\x01getnameinfo: Temporary failure in name resolution"
+            }
+          ]
+        },
+        {
+          "port": 1099,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "java-rmi",
+            "product": "GNU Classpath grmiregistry",
+            "version": "",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "rmi-vuln-classloader",
+              "output": "\n  VULNERABLE:\n  RMI registry default configuration remote code execution vulnerability\n    State: VULNERABLE\n      Default configuration of RMI registry allows loading classes from remote URLs which can lead to remote code execution.\n      \n    References:\n      https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/multi/misc/java_rmi_server.rb\n"
+            }
+          ]
+        },
+        {
+          "port": 1524,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "bindshell",
+            "product": "Metasploitable root shell",
+            "version": "",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": "root@metasploitable:/#"
+            }
+          ]
+        },
+        {
+          "port": 2049,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "nfs",
+            "product": "",
+            "version": "2-4",
+            "extrainfo": "RPC #100003"
+          }
+        },
+        {
+          "port": 2121,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "ftp",
+            "product": "ProFTPD",
+            "version": "1.3.1",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": "220 ProFTPD 1.3.1 Server (Debian) [::ffff:192.168.127.130]"
+            }
+          ]
+        },
+        {
+          "port": 3306,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "mysql",
+            "product": "MySQL",
+            "version": "5.0.51a-3ubuntu5",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": ">\\x00\\x00\\x00\\x0A5.0.51a-3ubuntu5\\x00`\\x02\\x00\\x00!0n[^F$}\\x00,\n\\xAA\\x08\\x02\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00...\n"
+            }
+          ]
+        },
+        {
+          "port": 3632,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "distccd",
+            "product": "distccd",
+            "version": "v1",
+            "extrainfo": "(GNU) 4.2.4 (Ubuntu 4.2.4-1ubuntu4)"
+          },
+          "scripts": [
+            {
+              "id": "distcc-cve2004-2687",
+              "output": "\n  VULNERABLE:\n  distcc Daemon Command Execution\n    State: VULNERABLE (Exploitable)\n    IDs:  CVE:CVE-2004-2687\n    Risk factor: High  CVSSv2: 9.3 (HIGH) (AV:N/AC:M/Au:N/C:C/I:C/A:C)\n      Allows executing of arbitrary commands on systems running distccd 3.1 and\n      earlier. The vulnerability is the consequence of weak service configuration.\n      \n    Disclosure date: 2002-02-01\n    Extra information:\n      \n    uid=1(daemon) gid=1(daemon) groups=1(daemon)\n  \n    References:\n      https://distcc.github.io/security.html\n      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-2687\n      https://nvd.nist.gov/vuln/detail/CVE-2004-2687\n"
+            }
+          ]
+        },
+        {
+          "port": 5432,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "postgresql",
+            "product": "PostgreSQL DB",
+            "version": "8.3.0 - 8.3.7",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "ssl-ccs-injection",
+              "output": "\n  VULNERABLE:\n  SSL/TLS MITM vulnerability (CCS Injection)\n    State: VULNERABLE\n    Risk factor: High\n      OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h\n      does not properly restrict processing of ChangeCipherSpec messages,\n      which allows man-in-the-middle attackers to trigger use of a zero\n      length master key in certain OpenSSL-to-OpenSSL communications, and\n      consequently hijack sessions or obtain sensitive information, via\n      a crafted TLS handshake, aka the \"CCS Injection\" vulnerability.\n          \n    References:\n      http://www.openssl.org/news/secadv_20140605.txt\n      http://www.cvedetails.com/cve/2014-0224\n      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224\n"
+            },
+            {
+              "id": "ssl-dh-params",
+              "output": "\n  VULNERABLE:\n  Diffie-Hellman Key Exchange Insufficient Group Strength\n    State: VULNERABLE\n      Transport Layer Security (TLS) services that use Diffie-Hellman groups\n      of insufficient strength, especially those using one of a few commonly\n      shared groups, may be susceptible to passive eavesdropping attacks.\n    Check results:\n      WEAK DH GROUP 1\n            Cipher Suite: TLS_DHE_RSA_WITH_AES_128_CBC_SHA\n            Modulus Type: Safe prime\n            Modulus Source: Unknown/Custom-generated\n            Modulus Length: 1024\n            Generator Length: 8\n            Public Key Length: 1024\n    References:\n      https://weakdh.org\n"
+            },
+            {
+              "id": "ssl-poodle",
+              "output": "\n  VULNERABLE:\n  SSL POODLE information leak\n    State: VULNERABLE\n    IDs:  BID:70574  CVE:CVE-2014-3566\n          The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other\n          products, uses nondeterministic CBC padding, which makes it easier\n          for man-in-the-middle attackers to obtain cleartext data via a\n          padding-oracle attack, aka the \"POODLE\" issue.\n    Disclosure date: 2014-10-14\n    Check results:\n      TLS_RSA_WITH_AES_128_CBC_SHA\n    References:\n      https://www.securityfocus.com/bid/70574\n      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566\n      https://www.openssl.org/~bodo/ssl-poodle.pdf\n      https://www.imperialviolet.org/2014/10/14/poodle.html\n"
+            }
+          ]
+        },
+        {
+          "port": 5900,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "vnc",
+            "product": "VNC",
+            "version": "",
+            "extrainfo": "protocol 3.3"
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": "RFB 003.003"
+            }
+          ]
+        },
+        {
+          "port": 6000,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "X11",
+            "product": "",
+            "version": "",
+            "extrainfo": "access denied"
+          }
+        },
+        {
+          "port": 6667,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "irc",
+            "product": "UnrealIRCd",
+            "version": "",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": ":irc.Metasploitable.LAN NOTICE AUTH :*** Looking up your hostna\nme..."
+            }
+          ]
+        },
+        {
+          "port": 6697,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "irc",
+            "product": "UnrealIRCd",
+            "version": "",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "banner",
+              "output": ":irc.Metasploitable.LAN NOTICE AUTH :*** Looking up your hostna\nme..."
+            },
+            {
+              "id": "irc-unrealircd-backdoor",
+              "output": "Looks like trojaned version of unrealircd. See http://seclists.org/fulldisclosure/2010/Jun/277"
+            },
+            {
+              "id": "ssl-ccs-injection",
+              "output": "No reply from server (TIMEOUT)"
+            },
+            {
+              "id": "irc-botnet-channels",
+              "output": "\n  ERROR: Closing Link: [192.168.127.129] (Ping timeout)\n"
+            }
+          ]
+        },
+        {
+          "port": 8009,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "ajp13",
+            "product": "Apache Jserv",
+            "version": "",
+            "extrainfo": "Protocol v1.3"
+          }
+        },
+        {
+          "port": 8180,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "http",
+            "product": "Apache Tomcat/Coyote JSP engine",
+            "version": "1.1",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "http-slowloris-check",
+              "output": "\n  VULNERABLE:\n  Slowloris DOS attack\n    State: LIKELY VULNERABLE\n    IDs:  CVE:CVE-2007-6750\n      Slowloris tries to keep many connections to the target web server open and hold\n      them open as long as possible.  It accomplishes this by opening connections to\n      the target web server and sending a partial request. By doing so, it starves\n      the http server's resources causing Denial Of Service.\n      \n    Disclosure date: 2009-09-17\n    References:\n      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750\n      http://ha.ckers.org/slowloris/\n"
+            },
+            {
+              "id": "http-dombased-xss",
+              "output": "Couldn't find any DOM based XSS."
+            },
+            {
+              "id": "http-cookie-flags",
+              "output": "\n  /admin/: \n    JSESSIONID: \n      httponly flag not set\n  /admin/index.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/login.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/admin.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/account.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/admin_login.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/home.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/admin-login.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/adminLogin.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/controlpanel.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/cp.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/index.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/login.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/admin.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/home.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/controlpanel.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/admin-login.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/cp.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/account.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/admin_login.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/adminLogin.jsp: \n    JSESSIONID: \n      httponly flag not set\n  /admin/view/javascript/fckeditor/editor/filemanager/connectors/test.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/includes/FCKeditor/editor/filemanager/upload/test.html: \n    JSESSIONID: \n      httponly flag not set\n  /admin/jscript/upload.html: \n    JSESSIONID: \n      httponly flag not set"
+            },
+            {
+              "id": "http-vuln-cve2014-3704",
+              "output": "ERROR: Script execution failed (use -d to debug)"
+            },
+            {
+              "id": "http-enum",
+              "output": "\n  /admin/: Possible admin folder\n  /admin/index.html: Possible admin folder\n  /admin/login.html: Possible admin folder\n  /admin/admin.html: Possible admin folder\n  /admin/account.html: Possible admin folder\n  /admin/admin_login.html: Possible admin folder\n  /admin/home.html: Possible admin folder\n  /admin/admin-login.html: Possible admin folder\n  /admin/adminLogin.html: Possible admin folder\n  /admin/controlpanel.html: Possible admin folder\n  /admin/cp.html: Possible admin folder\n  /admin/index.jsp: Possible admin folder\n  /admin/login.jsp: Possible admin folder\n  /admin/admin.jsp: Possible admin folder\n  /admin/home.jsp: Possible admin folder\n  /admin/controlpanel.jsp: Possible admin folder\n  /admin/admin-login.jsp: Possible admin folder\n  /admin/cp.jsp: Possible admin folder\n  /admin/account.jsp: Possible admin folder\n  /admin/admin_login.jsp: Possible admin folder\n  /admin/adminLogin.jsp: Possible admin folder\n  /manager/html/upload: Apache Tomcat (401 Unauthorized)\n  /manager/html: Apache Tomcat (401 Unauthorized)\n  /admin/view/javascript/fckeditor/editor/filemanager/connectors/test.html: OpenCart/FCKeditor File upload\n  /admin/includes/FCKeditor/editor/filemanager/upload/test.html: ASP Simple Blog / FCKeditor File Upload\n  /admin/jscript/upload.html: Lizard Cart/Remote File upload\n  /webdav/: Potentially interesting folder\n"
+            },
+            {
+              "id": "http-csrf",
+              "output": "\nSpidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.127.130\n  Found the following possible CSRF vulnerabilities: \n    \n    Path: http://192.168.127.130:8180/admin/\n    Form id: username\n    Form action: j_security_check;jsessionid=F89DA5AD4FA9FA202AFEED7F4F1A7568\n"
+            },
+            {
+              "id": "http-stored-xss",
+              "output": "Couldn't find any stored XSS vulnerabilities."
+            }
+          ]
+        },
+        {
+          "port": 8787,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "drb",
+            "product": "Ruby DRb RMI",
+            "version": "",
+            "extrainfo": "Ruby 1.8; path /usr/lib/ruby/1.8/drb"
+          }
+        },
+        {
+          "port": 41265,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "nlockmgr",
+            "product": "",
+            "version": "1-4",
+            "extrainfo": "RPC #100021"
+          }
+        },
+        {
+          "port": 43614,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "status",
+            "product": "",
+            "version": "1",
+            "extrainfo": "RPC #100024"
+          }
+        },
+        {
+          "port": 55951,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "mountd",
+            "product": "",
+            "version": "1-3",
+            "extrainfo": "RPC #100005"
+          }
+        },
+        {
+          "port": 57277,
+          "protocol": "tcp",
+          "state": "open",
+          "service": {
+            "name": "java-rmi",
+            "product": "GNU Classpath grmiregistry",
+            "version": "",
+            "extrainfo": ""
+          },
+          "scripts": [
+            {
+              "id": "rmi-vuln-classloader",
+              "output": "\n  VULNERABLE:\n  RMI registry default configuration remote code execution vulnerability\n    State: VULNERABLE\n      Default configuration of RMI registry allows loading classes from remote URLs which can lead to remote code execution.\n      \n    References:\n      https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/multi/misc/java_rmi_server.rb\n"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

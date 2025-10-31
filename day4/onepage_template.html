@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quick Vulnerability Snapshot</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:24px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    h1{margin:0}
+    .meta{font-size:0.9rem;color:#444}
+    .section{margin-top:18px}
+    table{width:100%;border-collapse:collapse}
+    td,th{border:1px solid #ddd;padding:8px}
+    .high{background:#ffd6d6}
+    .medium{background:#fff4cc}
+    .low{background:#e8f7e8}
+  </style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Quick Vulnerability Snapshot</h1>
+    <div class="meta">Prepared by: YOUR NAME — <span id="date"></span></div>
+  </div>
+  <div><img src="logo_placeholder.png" alt="logo" width="120"></div>
+</header>
+
+<section class="section">
+  <h2>Executive Summary</h2>
+  <p>This short report contains top findings from a quick vulnerability scan and recommended next steps.</p>
+</section>
+
+<section class="section">
+  <h2>Top Findings</h2>
+  <table>
+    <tr><th>Severity</th><th>Issue</th><th>Remediation</th></tr>
+    <tr class="high"><td>High</td><td>FTP anonymous login</td><td>Disable anonymous login or restrict access</td></tr>
+    <tr class="medium"><td>Medium</td><td>Open MySQL</td><td>Bind to localhost and enforce strong passwords</td></tr>
+    <tr class="low"><td>Low</td><td>SSH root login permitted</td><td>Disable root login and use key auth</td></tr>
+  </table>
+</section>
+
+<script>
+document.getElementById('date').textContent = new Date().toLocaleString();
+</script>
+</body>
+</html>
